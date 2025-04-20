@@ -14,5 +14,6 @@ export interface ICategoryRepository {
     getCategories(merchantId: string, filters?: ICategoryFilters): Promise<IPaginateData<CategoryResponseDetail>>;
     createCategory(props: CategoryProps): Promise<Category>;
     getCategory(filters: ICategoryFilters): Promise<CategoryResponseDetail | null>;
-
+    updateCategory(id: string, props: Partial<CategoryProps>): Promise<CategoryResponseDetail>
+    deleteCategory(id: string, merchant: string): Promise<void>;
 }

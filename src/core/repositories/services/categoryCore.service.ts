@@ -34,10 +34,29 @@ export class CategoryCoreService implements ICategoryRepository {
             throw error;
         }
     }
+
     async getCategory(filters: ICategoryFilters): Promise<CategoryResponseDetail | null> {
         try {
             const category = await getDataByFilters<CategoryDbResponseDetail, ICategoryFilters>(this.categoryModel, filters, ['merchant']);
             return category ? CategoryMaps.toDomainDetail(category) : null;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async updateCategory(id: string, props: Partial<CategoryProps>): Promise<CategoryResponseDetail> {
+        try {
+            const resultUpdated = await this.categoryModel.findByIdAndUpdate(id, props, { new: true });
+            const result = await getDataByFilters<CategoryDbResponseDetail, { _id: string }>(this.categoryModel, { _id: resultUpdated._id.toString() }, ['merchant']);
+            return CategoryMaps.toDomainDetail(result);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteCategory(id: string, merchant: string): Promise<void> {
+        try {
+            await this.categoryModel.findOneAndDelete({ _id: id, merchant })
         } catch (error) {
             throw error;
         }
