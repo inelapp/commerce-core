@@ -6,7 +6,7 @@ RUN apk add --no-cache tzdata
 ENV TZ=America/Lima
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime
 
-COPY package.json yarn.lock ./
+COPY package.json ./
 
 RUN yarn install --frozen-lockfile
 
