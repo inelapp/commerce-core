@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { GenericObject } from 'src/types';
+import { GenericObject } from '../../../types';
 
 export const timeZone = 'America/Lima';
 export const baseOkResponse = (data: GenericObject) => {

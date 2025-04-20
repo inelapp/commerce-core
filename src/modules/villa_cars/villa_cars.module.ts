@@ -1,7 +1,7 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { CategoryController } from './controller';
 import { CategoryService } from './services';
-import { AppModule } from 'src/app.module';
+import { AppModule } from '../../app.module';
 import { CreateCategory, GetCategories } from './UsesCases';
 
 @Module({

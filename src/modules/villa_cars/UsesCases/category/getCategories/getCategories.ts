@@ -1,12 +1,11 @@
 import { err, ok, Result } from "neverthrow";
 import { GetCategoriesResponseDto } from "./getCategoriesResponseDto";
-import { UnexpectedError, UseCase, validateRequest } from "src/utils";
+import { UnexpectedError, UseCase, validateRequest } from "../../../../../utils";
 import { GetCategoriesBadRequestError } from "./getCategoriesErrors";
-import { CategoryCoreService } from "src/core/repositories";
+import { CategoryCoreService, defaultFilterSchema } from "../../../../../core";
 import { GetCategoriesRequestDto } from "./getCategoriesRequestDto";
-import Joi from "joi";
-import { defaultFilterSchema } from "src/core";
 import { Injectable } from "@nestjs/common";
+import Joi from "joi";
 
 type Response = Result<GetCategoriesResponseDto, UnexpectedError | GetCategoriesBadRequestError>;
 

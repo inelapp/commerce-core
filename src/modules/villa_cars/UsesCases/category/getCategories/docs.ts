@@ -1,5 +1,5 @@
 import { ApiQueryOptions, ApiResponseOptions } from '@nestjs/swagger';
-import { baseOkResponse } from 'src/core';
+import { baseOkResponse } from '../../../../../core';
 
 export const getCategoriesSwaggerParams: ApiQueryOptions[] = [
     {

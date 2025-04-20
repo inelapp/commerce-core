@@ -1,4 +1,4 @@
-import { GenericFilters, GenericOptions } from "src/types";
+import { GenericFilters, GenericOptions } from "../../types";
 import { IPaginateData } from "../../utils";
 import { Category, CategoryProps } from "../domain";
 import { CategoryResponseDetail } from "../mappers";

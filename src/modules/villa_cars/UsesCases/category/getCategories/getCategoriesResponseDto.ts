@@ -1,4 +1,4 @@
-import { CategoryResponseDetail } from "src/core/mappers";
-import { IPaginateData } from "src/utils";
+import { CategoryResponseDetail } from "../../../../../core/mappers";
+import { IPaginateData } from "../../../../../utils";
 
 export type GetCategoriesResponseDto = IPaginateData<CategoryResponseDetail>
