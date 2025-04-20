@@ -4,7 +4,7 @@ import { UnexpectedError, UseCase, validateRequest } from "../../../../../utils"
 import { GetCategoriesBadRequestError } from "./getCategoriesErrors";
 import { CategoryCoreService, defaultFilterSchema } from "../../../../../core";
 import { GetCategoriesRequestDto } from "./getCategoriesRequestDto";
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import Joi from "joi";
 
 type Response = Result<GetCategoriesResponseDto, UnexpectedError | GetCategoriesBadRequestError>;
@@ -12,6 +12,7 @@ type Response = Result<GetCategoriesResponseDto, UnexpectedError | GetCategories
 @Injectable()
 export class GetCategories implements UseCase<GetCategoriesRequestDto, Response> {
     constructor(
+        @Inject(forwardRef(() => CategoryCoreService))
         private readonly categoryCoreService: CategoryCoreService
     ){}
     

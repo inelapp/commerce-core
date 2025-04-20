@@ -4,7 +4,7 @@ import { UnexpectedError, UseCase, validateRequest } from "../../../../../utils"
 import { CreateCategoryAlreadyExistsError, CreateCategoryBadRequestError } from "./createCategoryErrors";
 import { CreateCategoryRequestDto } from "./createCategoryRequestDto";
 import { CategoryCoreService } from "../../../../../core/repositories";
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import Joi from 'joi';
 import { fileJoiSchema } from "../../../../../core";
 
@@ -12,7 +12,10 @@ type Response = Result<CreateCategoryResponseDto, UnexpectedError | CreateCatego
 
 @Injectable()
 export class CreateCategory implements UseCase<CreateCategoryRequestDto, Response> {
-    constructor(private readonly categoryCoreService: CategoryCoreService) {}
+    constructor(
+        @Inject(forwardRef(() => CategoryCoreService))
+        private readonly categoryCoreService: CategoryCoreService
+    ) {}
 
     validate(request: CreateCategoryRequestDto) {
         const validationSchema = Joi.object<CreateCategoryRequestDto>({
