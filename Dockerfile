@@ -18,4 +18,4 @@ ENV PORT=3002
 
 EXPOSE $PORT
 
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "start"]
