@@ -28,7 +28,7 @@ export class UserController {
     @ApiOperation({ summary: 'Create a new user' })
     @ApiResponse({  status: 201, description: 'User created successfully' })
     async createUser(@Body() body: CreateUserDto) {
-        const validationResult = validateRequest<CreateUserDto>(createUserSchema, body)
+        const validationResult = validateRequest<CreateUserDto>(createUserSchema, body, 'Zod')
         if (validationResult.isErr()) {
             throw new CreateUserBadRequestError(validationResult.error)
         }

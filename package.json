@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "prod:up": "docker build -t nest_app . && docker run -p 3002:3002 nest_app"
+    "prod:up": "docker build -t commerce_core . && docker run -p 3002:3002 commerce_core"
   },
   "dependencies": {
     "@formkit/tempo": "^0.1.2",
@@ -27,11 +27,14 @@
     "@nestjs/mongoose": "^11.0.3",
     "@nestjs/platform-express": "^10.0.0",
     "cloudinary": "^2.6.0",
+    "joi": "^17.13.3",
     "mongoose": "^8.13.2",
+    "morgan": "^1.10.0",
     "multer-storage-cloudinary": "^4.0.0",
     "neverthrow": "^8.2.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "uuid": "^11.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -42,6 +45,7 @@
     "@nestjs/testing": "^10.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.2",
+    "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.12",
     "@types/node": "^20.3.1",
     "@types/supertest": "^6.0.0",

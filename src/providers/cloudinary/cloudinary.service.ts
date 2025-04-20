@@ -36,11 +36,11 @@ export class CloudinaryService {
         });
     }
 
-    async uploadImage(file: Express.Multer.File): Promise<Result<CloudinaryUploadResponse, UploadApiErrorResponse>> {
+    async uploadImage(file: Express.Multer.File, folder: string): Promise<Result<CloudinaryUploadResponse, UploadApiErrorResponse>> {
         return new Promise((resolve, reject) => {
             this.cloudinaryClient.uploader
                 .upload_stream({ 
-                    folder: 'vc_images',
+                    folder,
                     format: 'webp',
                 }, (error, result) => {
                     if (error) return reject(err(error));

@@ -68,6 +68,10 @@ async function getQueryToFilterData<Filters>(
                     !isValidObjectId(value)
                 ) {
                     query[key] = { $regex: value, $options: 'i' };
+                    if ((filters as any).noRegex) {
+                        delete (filters as any).noRegex;
+                        query[key] = value
+                    }
                 } else if (
                     isValidObjectId(value) &&
                     (key === 'id' || key === '_id')

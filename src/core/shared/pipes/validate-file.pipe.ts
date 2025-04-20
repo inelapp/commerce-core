@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
+import { allowedExtensions, allowedMimeTypes } from '../constants';
 
 class ValidateFileInvalidMimeTypeException extends BadRequestException {
   constructor(message: string) {
@@ -25,8 +26,6 @@ export class ValidateFilePipe implements PipeTransform {
       throw new BadRequestException('No file uploaded');
     }
 
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
     const fileExtension = file.originalname.split('.').pop();
     const fileMimeType = file.mimetype;
     

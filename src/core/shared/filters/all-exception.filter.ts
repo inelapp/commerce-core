@@ -7,12 +7,15 @@ export class AllExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     const status = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
+    const errorType = exception instanceof HttpException && exception.cause 
+      ? exception.cause.constructor.name 
+      : exception.constructor.name;
 
     const errorResponse = {
       succes: false,
       error: exception.message || 'Internal server error',
       statusCode: status,
-      type: exception.constructor.name,
+      type: errorType,
       path: request.originalUrl,
     }
 

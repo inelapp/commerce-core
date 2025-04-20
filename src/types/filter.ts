@@ -12,5 +12,6 @@ export interface GenericFilters {
 
 export interface GenericOptions {
     showSensibleData?: boolean;
-    paginate?: boolean; 
+    paginate?: boolean;
+    noRegex?: boolean;
 }

@@ -1,24 +1,41 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AllExceptionFilter, ResponseInterceptor } from './core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+    AllExceptionFilter,
+    ResponseInterceptor,
+    SwaggerFactory,
+} from './core';
 import { patchNestJsSwagger } from 'nestjs-zod';
+import morgan from 'morgan';
+import { v4 as uuid } from 'uuid';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
     patchNestJsSwagger();
     const app = await NestFactory.create(AppModule);
+    morgan.token('id', (req: any) => req.id || uuid());
+    morgan.token('body', (req: any) => JSON.stringify(req.body));
+    morgan.token('query', (req: any) => JSON.stringify(req.query));
+    const customFormat =
+        ':id :method :url :status :response-time ms - :res[content-length] - :body - :query';
+    app.use(morgan(customFormat));
+
+    app.use(
+        morgan(
+            '[:date[iso]] :method :url :status :response-time ms - :res[content-length]',
+            {
+                skip: (req, res) => res.statusCode < 400,
+            },
+        ),
+    );
     app.useGlobalFilters(new AllExceptionFilter());
     app.useGlobalInterceptors(new ResponseInterceptor());
     app.setGlobalPrefix('api');
 
-    const config = new DocumentBuilder()
-        .setTitle('Example API')
-        .setDescription('The example API description')
-        .setVersion('1.0')
-        .build();
-    const documentFactory = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api/docs', app, documentFactory);
+    SwaggerFactory.setupMerchantDocs(app);
 
-    await app.listen(process.env.PORT ?? 3000);
+    const configService = app.get(ConfigService);
+    const port = configService.get<number>('PORT') || 3000;
+    await app.listen(port);
 }
 bootstrap();
