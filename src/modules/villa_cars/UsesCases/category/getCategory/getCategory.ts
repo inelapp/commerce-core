@@ -5,8 +5,7 @@ import { GetCategoryBadRequestError, GetCategoryNotFoundError } from "./getCateg
 import { GetCategoryRequestDto } from "./getCategoryRequestDto";
 import Joi from "joi";
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { CategoryCoreService } from "../../../../../core";
-import { isValidObjectId } from "mongoose";
+import { CategoryCoreService, genericGetResourceSchema } from "../../../../../core";
 
 type Response = Result<GetCategoryResponseDto, UnexpectedError | GetCategoryBadRequestError | GetCategoryNotFoundError>;
 
@@ -18,18 +17,7 @@ export class GetCategory implements UseCase<GetCategoryRequestDto, Response> {
     ){}
 
     validate(request: GetCategoryRequestDto) {
-        const validationSchema = Joi.object<GetCategoryRequestDto>({
-            id: Joi.string().required().custom((value, helpers) => {
-                if(!isValidObjectId(value)) {
-                    return helpers.error('string.invalid');
-                }
-                return value;
-            }).messages({
-                'string.empty': 'Category ID is required',
-                'string.invalid': 'Invalid Category ID',
-            }),
-            merchant: Joi.string().required(),
-        })
+        const validationSchema = Joi.object<GetCategoryRequestDto>(genericGetResourceSchema)
         return validateRequest<GetCategoryRequestDto>(validationSchema, request, 'Joi');
     }
 

@@ -4,7 +4,7 @@ import { UnexpectedError, UseCase, validateRequest } from "../../../../../utils"
 import { UpdateCategoryBadRequestError, UpdateCategoryNotFoundError } from "./updateCategoryError";
 import { UpdateCategoryRequestDto } from "./updateCategoryRequestDto";
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { CategoryCoreService, fileJoiSchema } from "../../../../../core";
+import { CategoryCoreService, genericGetResourceSchema } from "../../../../../core";
 import Joi from "joi";
 
 type Response = Result<UpdateCategoryResponseDto, UnexpectedError | UpdateCategoryBadRequestError | UpdateCategoryNotFoundError>;
@@ -17,14 +17,7 @@ export class UpdateCategory implements UseCase<UpdateCategoryRequestDto, Respons
     ){}
 
     validate(request: UpdateCategoryRequestDto) {
-        const validationSchema = Joi.object<UpdateCategoryRequestDto>({
-            name: Joi.string().optional(),
-            description: Joi.string().optional(),
-            img: fileJoiSchema.optional(),
-            status: Joi.string().valid('active', 'inactive').optional(),
-            parents: Joi.array().items(Joi.string()).optional(),
-            id: Joi.string().required(),
-        })
+        const validationSchema = Joi.object<UpdateCategoryRequestDto>(genericGetResourceSchema)
         return validateRequest<UpdateCategoryRequestDto>(validationSchema, request, 'Joi');
     }
 

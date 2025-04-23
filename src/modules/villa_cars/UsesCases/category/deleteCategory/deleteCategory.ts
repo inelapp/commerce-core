@@ -4,9 +4,8 @@ import { formatDate, UnexpectedError, UseCase, validateRequest } from "../../../
 import { DeleteCategoryBadRequestError, DeleteCategoryNotFoundError } from "./deleteCategoryErrors";
 import { DeleteCategoryRequestDto } from "./deleteCategoryRequestDto";
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { CategoryCoreService } from "../../../../../core";
+import { CategoryCoreService, genericGetResourceSchema } from "../../../../../core";
 import Joi from "joi";
-import { isValidObjectId } from "mongoose";
 
 type Response = Result<DeleteCategoryResponseDto, UnexpectedError | DeleteCategoryBadRequestError | DeleteCategoryNotFoundError>;
 
@@ -19,18 +18,7 @@ export class DeleteCategory implements UseCase<DeleteCategoryRequestDto, Respons
 
     validate(request: DeleteCategoryRequestDto) {
         try {
-            const validationSchema = Joi.object<DeleteCategoryRequestDto>({
-                id: Joi.string().required().custom((value, helpers) => {
-                    if(!isValidObjectId(value)) {
-                        return helpers.error('string.invalid');
-                    }
-                    return value;
-                }).messages({
-                    'string.empty': 'Category ID is required',
-                    'string.invalid': 'Invalid Category ID',
-                }),
-                merchant: Joi.string().required(),
-            })
+            const validationSchema = Joi.object<DeleteCategoryRequestDto>(genericGetResourceSchema)
             return validateRequest<DeleteCategoryRequestDto>(validationSchema, request, 'Joi');
         } catch (error) {
             

@@ -19,7 +19,6 @@ async function bootstrap() {
     const customFormat =
         ':id :method :url :status :response-time ms - :res[content-length] - :body - :query';
     app.use(morgan(customFormat));
-
     app.use(
         morgan(
             '[:date[iso]] :method :url :status :response-time ms - :res[content-length]',
@@ -31,7 +30,8 @@ async function bootstrap() {
     app.useGlobalFilters(new AllExceptionFilter());
     app.useGlobalInterceptors(new ResponseInterceptor());
     app.setGlobalPrefix('api');
-
+    app.enableCors({ origin: '*' });
+    
     SwaggerFactory.setupMerchantDocs(app);
 
     const configService = app.get(ConfigService);

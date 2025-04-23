@@ -8,6 +8,6 @@ export interface UseCase<Request, Response> {
 export class UnexpectedError extends HttpException {
     constructor(message: string) {
         console.error(message);
-        super(message, 500);
+        super('An unexpected error occurred', 500);
     }
 }

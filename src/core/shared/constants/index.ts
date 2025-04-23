@@ -1,13 +1,14 @@
 import Joi from 'joi';
 import { GenericObject } from '../../../types';
+import { isValidObjectId } from 'mongoose';
 
 export const timeZone = 'America/Lima';
 export const baseOkResponse = (data: GenericObject) => {
     return {
         success: true,
         result: data,
-    }
-}
+    };
+};
 export const genericBadRequestErrorResponse = {
     status: 400,
     description: 'Bad Request',
@@ -22,7 +23,12 @@ export const genericBadRequestErrorResponse = {
         },
     },
 };
-export const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+export const allowedMimeTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+];
 export const allowedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
 export const fileJoiSchema = Joi.object({
     fieldname: Joi.string().required(),
@@ -36,7 +42,6 @@ export const fileJoiSchema = Joi.object({
         .max(5 * 1024 * 1024)
         .required(),
 }).optional();
-
 export const defaultFilterSchema = Joi.object({
     page: Joi.alternatives(Joi.string(), Joi.number()).default(1).optional(),
     limit: Joi.alternatives(Joi.string(), Joi.number()).default(10).optional(),
@@ -45,4 +50,19 @@ export const defaultFilterSchema = Joi.object({
     $ne: Joi.object().optional(),
     fromDate: Joi.date().optional(),
     toDate: Joi.date().optional(),
-})
+});
+export const genericGetResourceSchema = {
+    id: Joi.string()
+        .required()
+        .custom((value, helpers) => {
+            if (!isValidObjectId(value)) {
+                return helpers.error('string.invalid');
+            }
+            return value;
+        })
+        .messages({
+            'string.empty': 'Category ID is required',
+            'string.invalid': 'Invalid Category ID',
+        }),
+    merchant: Joi.string().required(),
+};
