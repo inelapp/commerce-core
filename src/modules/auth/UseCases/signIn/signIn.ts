@@ -1,10 +1,10 @@
 import { err, ok, Result } from "neverthrow";
 import { SignInResponseDto } from "./signInResponseDto";
 import { SignInBadRequestError, SignInEmailNotFoundError, SignInInvalidPasswordError } from "./signInErrors";
-import { compareHash, UnexpectedError, UseCase, validateRequest } from "src/utils";
+import { compareHash, UnexpectedError, UseCase, validateRequest } from "../../../../utils";
 import { SignInRequestDto } from "./signInRequestDto";
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { UserAuthCoreService } from "src/core";
+import { UserAuthCoreService } from "../../../../core";
 import Joi from "joi";
 import { JwtService } from "@nestjs/jwt";
 

@@ -1,4 +1,4 @@
-import { IPaginateData } from "src/utils";
+import { IPaginateData } from "../../utils";
 import { GenericFilters, GenericOptions } from "../../types";
 import { IRefreshTokenProps, RefreshToken, UserProps } from "../domain";
 import { UserResponseDetail } from "../mappers/userAuhtMaps";

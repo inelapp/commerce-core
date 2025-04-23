@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { CreateUserRequestDto, CreateUserResponseDto, createUserSwaggerSchema, SignInRequestDto, signInRequestSwaggerSchema, SignInResponseDto, signInResponseSwaggerSchema } from '../../../modules/auth/UseCases';
-import { genericBadRequestErrorResponse } from 'src/core';
+import { genericBadRequestErrorResponse } from '../../../core';
 
 @Controller('villa-cars/v1/user')
 @ApiTags('User')
